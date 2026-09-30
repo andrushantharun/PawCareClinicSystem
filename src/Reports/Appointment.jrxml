@@ -1,0 +1,144 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="Appointment" language="java" columnCount="1" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="993e642b-84d1-42d0-823d-5a4a51b33bb1">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PawCareDB"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<query language="SQL"><![CDATA[SELECT a.appointment_id, c.full_name AS customer_name, p.pet_name,
+       s.service_name, s.price AS service_price, u.full_name AS staff_name,
+       a.appointment_date, a.appointment_time, a.status
+FROM appointments a
+JOIN customers c ON a.customer_id = c.customer_id
+JOIN pets p ON a.pet_id = p.pet_id
+JOIN services s ON a.service_id = s.service_id
+JOIN users u ON a.user_id = u.user_id
+ORDER BY a.appointment_date, a.appointment_time]]></query>
+	<field name="appointment_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="appointment_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="appointment_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="appointments"/>
+	</field>
+	<field name="customer_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="full_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="customer_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customers"/>
+	</field>
+	<field name="pet_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="pet_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="pet_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pets"/>
+	</field>
+	<field name="service_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="service_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="service_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="services"/>
+	</field>
+	<field name="service_price" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="price"/>
+		<property name="com.jaspersoft.studio.field.label" value="service_price"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="services"/>
+	</field>
+	<field name="staff_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="full_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="staff_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="users"/>
+	</field>
+	<field name="appointment_date" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="appointment_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="appointment_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="appointments"/>
+	</field>
+	<field name="appointment_time" class="java.sql.Time">
+		<property name="com.jaspersoft.studio.field.name" value="appointment_time"/>
+		<property name="com.jaspersoft.studio.field.label" value="appointment_time"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="appointments"/>
+	</field>
+	<field name="status" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="status"/>
+		<property name="com.jaspersoft.studio.field.label" value="status"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="appointments"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch">
+		<element kind="staticText" uuid="65c28160-ce56-4404-bd20-c16d9940d38f" x="205" y="24" width="393" height="30" fontSize="16.0" bold="true" hTextAlign="Center">
+			<text><![CDATA[PawCare Clinic - Appointment Management Report]]></text>
+		</element>
+	</title>
+	<pageHeader height="35" splitType="Stretch"/>
+	<columnHeader height="71" splitType="Stretch">
+		<element kind="staticText" uuid="6dc3d29b-8fe9-4a7f-8e9a-d2bb5ba468eb" x="0" y="10" width="100" height="30" bold="true" hTextAlign="Center">
+			<text><![CDATA[Date]]></text>
+		</element>
+		<element kind="staticText" uuid="bcaa844c-430d-4762-a939-2af9e89fdb97" x="200" y="10" width="100" height="30" bold="true" hTextAlign="Center">
+			<text><![CDATA[Customer
+]]></text>
+		</element>
+		<element kind="staticText" uuid="92cd0689-b8e6-461e-82d1-5cc091f43971" x="100" y="10" width="100" height="30" bold="true" hTextAlign="Center">
+			<text><![CDATA[Time
+]]></text>
+		</element>
+		<element kind="staticText" uuid="2f119548-817c-4c52-b810-026b48146f3a" x="300" y="10" width="100" height="30" bold="true" hTextAlign="Center">
+			<text><![CDATA[Pet
+]]></text>
+		</element>
+		<element kind="staticText" uuid="fcc48dc2-1c0c-4b6c-856e-990d2676c018" x="400" y="11" width="100" height="30" bold="true" hTextAlign="Center">
+			<text><![CDATA[Service]]></text>
+		</element>
+		<element kind="staticText" uuid="d3cccdf8-7981-4f24-8dc7-55b1d33e47d8" x="500" y="10" width="100" height="30" bold="true" hTextAlign="Center">
+			<text><![CDATA[Price]]></text>
+		</element>
+		<element kind="staticText" uuid="26fd355a-1446-4799-bd41-28f0327f5a90" x="600" y="10" width="100" height="30" bold="true" hTextAlign="Center">
+			<text><![CDATA[Staff]]></text>
+		</element>
+		<element kind="staticText" uuid="a0681391-a639-4103-9389-0d36c16704be" x="700" y="10" width="100" height="30" bold="true" hTextAlign="Center">
+			<text><![CDATA[Status
+]]></text>
+		</element>
+		<element kind="textField" uuid="b9d4dd92-21e4-4a4e-97fd-4f3e0b820262" x="0" y="41" width="100" height="30" pattern="dd/MM/yyyy" hTextAlign="Center">
+			<expression><![CDATA[$F{appointment_date}]]></expression>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4b66ef8c-e029-42fa-a8e3-1b20c01585a5"/>
+		</element>
+		<element kind="textField" uuid="26ef8fce-cc53-4a9a-86a5-35897c4a8b8f" x="100" y="41" width="100" height="30" pattern="HH:mm a" hTextAlign="Center">
+			<expression><![CDATA[$F{appointment_time}]]></expression>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a9eff79b-3294-403d-867f-fb6efe51b26f"/>
+		</element>
+		<element kind="textField" uuid="6afd9733-6964-48df-b049-022a2c60a97c" x="200" y="41" width="100" height="30" hTextAlign="Center">
+			<expression><![CDATA[$F{customer_name}]]></expression>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2768532f-c867-4bb8-bb78-425f33905c74"/>
+		</element>
+		<element kind="textField" uuid="c477e8c2-8f4b-44e9-aa9c-40cbde8a1156" x="300" y="41" width="90" height="30" hTextAlign="Center">
+			<expression><![CDATA[$F{pet_name}]]></expression>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="565232c6-27a9-4e81-b726-5b6ba6adb820"/>
+		</element>
+		<element kind="textField" uuid="d9375afb-38db-4b4d-8842-fb275787ad6c" x="400" y="41" width="100" height="30" hTextAlign="Center">
+			<expression><![CDATA[$F{service_name}]]></expression>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b7b62a3b-e914-425a-901d-20fb3f51800e"/>
+		</element>
+		<element kind="textField" uuid="757d9b68-0bc5-4d61-9dbc-52afc90066ee" x="498" y="40" width="100" height="30" pattern="Rs#0.00#" hTextAlign="Center">
+			<expression><![CDATA[$F{service_price}]]></expression>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b87adfe0-041a-4d53-a7a9-2fb9a4b8697e"/>
+		</element>
+		<element kind="textField" uuid="ff63c710-ab93-4307-a71e-77d0d619265e" x="600" y="40" width="100" height="30" hTextAlign="Center">
+			<expression><![CDATA[$F{staff_name}]]></expression>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e718f927-a8cb-4a47-aefc-7ddfa60dd30e"/>
+		</element>
+		<element kind="textField" uuid="70f62356-574d-4dd8-a368-74a420f028d9" x="700" y="40" width="100" height="30" hTextAlign="Center">
+			<expression><![CDATA[$F{status}]]></expression>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1840fd80-fb10-449b-9157-1f0ce9c1c157"/>
+			<property name="net.sf.jasperreports.style.hTextAlign" value="Center"/>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter height="45" splitType="Stretch"/>
+	<pageFooter height="54" splitType="Stretch"/>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>

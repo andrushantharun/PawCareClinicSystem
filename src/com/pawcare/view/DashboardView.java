@@ -176,7 +176,7 @@ public class DashboardView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAppointmentsActionPerformed
 
     private void btnReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportsActionPerformed
-javax.swing.JOptionPane.showMessageDialog(this, "Reports - coming soon.");
+        com.pawcare.util.ReportUtil.showAppointmentReport();
     }//GEN-LAST:event_btnReportsActionPerformed
 
     private void btnTreatmentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTreatmentsActionPerformed
