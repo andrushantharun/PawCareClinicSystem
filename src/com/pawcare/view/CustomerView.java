@@ -19,7 +19,7 @@ public class CustomerView extends javax.swing.JFrame {
 
     private final CustomerController customerController = new CustomerController();
     private final User loggedInUser;
-    private int selectedCustomerId = 0; // 0 means "no row selected, in Add mode"
+    private int selectedCustomerId = 0;
     
     public CustomerView(User loggedInUser) {
     this.loggedInUser = loggedInUser;
@@ -29,7 +29,7 @@ public class CustomerView extends javax.swing.JFrame {
 private void loadCustomerTable() {
     try {
         DefaultTableModel model = (DefaultTableModel) tblCustomers.getModel();
-        model.setRowCount(0); // clear existing rows
+        model.setRowCount(0);
 
         for (Customer c : customerController.getAllCustomers()) {
             model.addRow(new Object[]{
@@ -164,9 +164,7 @@ private void showSuccess(String message) {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(btnAdd)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnDelete)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnBack))
+                            .addComponent(btnDelete))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -182,9 +180,11 @@ private void showSuccess(String message) {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(btnUpdate)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnClear))))
+                            .addComponent(btnClear)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnBack))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -192,6 +192,7 @@ private void showSuccess(String message) {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
@@ -213,14 +214,13 @@ private void showSuccess(String message) {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAdd)
-                            .addComponent(btnDelete)
-                            .addComponent(btnBack))
+                            .addComponent(btnDelete))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnUpdate)
-                            .addComponent(btnClear)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                            .addComponent(btnClear)
+                            .addComponent(btnBack))))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -235,7 +235,6 @@ private void showSuccess(String message) {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -275,7 +274,7 @@ private void showSuccess(String message) {
                 txtPhone.getText().trim(),
                 txtEmail.getText().trim(),
                 txtAddress.getText().trim(),
-                LocalDate.now() // not written on update — updateCustomer() ignores this field
+                LocalDate.now() 
         );
         customerController.updateCustomer(customer);
         showSuccess("Customer updated successfully.");
