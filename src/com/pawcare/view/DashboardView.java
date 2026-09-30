@@ -4,6 +4,8 @@
  */
 package com.pawcare.view;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author Arulthas
@@ -16,7 +18,39 @@ public class DashboardView extends javax.swing.JFrame {
         this.loggedInUser = loggedInUser;
         initComponents();
         lblWelcome.setText("Welcome, " + loggedInUser.getFullName() + " (" + loggedInUser.getRole() + ")");
+        loadDashboardStats();
     }
+    
+    private void loadDashboardStats() {
+    try {
+        int totalCustomers = new com.pawcare.service.CustomerService().getAllCustomers().size();
+        int totalPets = new com.pawcare.service.PetService().getAllPets().size();
+
+        java.util.List<com.pawcare.model.Appointment> allAppointments =
+                new com.pawcare.service.AppointmentService().getAllAppointments();
+        long todayCount = allAppointments.stream()
+                .filter(a -> a.getAppointmentDate().equals(java.time.LocalDate.now()))
+                .count();
+
+        double totalRevenue = new com.pawcare.service.PaymentService().getAllPayments()
+                .stream()
+                .mapToDouble(p -> p.getAmount().doubleValue())
+                .sum();
+
+        lblTotalCustomers.setText("Customers: " + totalCustomers);
+        lblTotalPets.setText("Pets: " + totalPets);
+        lblTodayAppointments.setText("Today's Appointments: " + todayCount);
+        lblTotalRevenue.setText(String.format("Total Revenue: Rs%.2f", totalRevenue));
+
+    } catch (SQLException e) {
+        lblTotalCustomers.setText("Customers: --");
+        lblTotalPets.setText("Pets: --");
+        lblTodayAppointments.setText("Today's Appointments: --");
+        lblTotalRevenue.setText("Total Revenue: --");
+    }
+}
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,7 +62,6 @@ public class DashboardView extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        lblWelcome = new javax.swing.JLabel();
         btnCustomers = new javax.swing.JButton();
         btnPets = new javax.swing.JButton();
         btnServices = new javax.swing.JButton();
@@ -37,6 +70,11 @@ public class DashboardView extends javax.swing.JFrame {
         btnLogut = new javax.swing.JButton();
         btnTreatments = new javax.swing.JButton();
         btnPayments = new javax.swing.JButton();
+        lblTodayAppointments = new javax.swing.JLabel();
+        lblTotalCustomers = new javax.swing.JLabel();
+        lblTotalPets = new javax.swing.JLabel();
+        lblTotalRevenue = new javax.swing.JLabel();
+        lblWelcome = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,9 +84,6 @@ public class DashboardView extends javax.swing.JFrame {
         jLabel1.setForeground(java.awt.Color.white);
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("PawCare Clinic - Dashboard");
-
-        lblWelcome.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblWelcome.setForeground(java.awt.Color.white);
 
         btnCustomers.setText("Customer Management");
         btnCustomers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -82,41 +117,72 @@ public class DashboardView extends javax.swing.JFrame {
         btnPayments.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPayments.addActionListener(this::btnPaymentsActionPerformed);
 
+        lblTodayAppointments.setForeground(java.awt.Color.white);
+        lblTodayAppointments.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        lblTotalCustomers.setForeground(java.awt.Color.white);
+        lblTotalCustomers.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        lblTotalPets.setForeground(java.awt.Color.white);
+        lblTotalPets.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        lblTotalRevenue.setForeground(java.awt.Color.white);
+        lblTotalRevenue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        lblWelcome.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblWelcome.setForeground(java.awt.Color.white);
+        lblWelcome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnReports, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnPets, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnPayments, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnCustomers, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnLogut, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnAppointments, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                                    .addComponent(btnServices, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnTreatments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addComponent(lblTodayAppointments, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblTotalCustomers, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTotalPets, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblTotalRevenue, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(lblWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(btnReports, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnPets, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnPayments, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnCustomers, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(btnLogut, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnAppointments, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                                        .addComponent(btnServices, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnTreatments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTotalCustomers, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTotalPets, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTodayAppointments, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTotalRevenue, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCustomers)
@@ -133,7 +199,7 @@ public class DashboardView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogut)
                     .addComponent(btnReports))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -144,7 +210,9 @@ public class DashboardView extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -204,6 +272,10 @@ public class DashboardView extends javax.swing.JFrame {
     private javax.swing.JButton btnTreatments;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblTodayAppointments;
+    private javax.swing.JLabel lblTotalCustomers;
+    private javax.swing.JLabel lblTotalPets;
+    private javax.swing.JLabel lblTotalRevenue;
     private javax.swing.JLabel lblWelcome;
     // End of variables declaration//GEN-END:variables
 }
